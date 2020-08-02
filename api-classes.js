@@ -57,12 +57,9 @@ class StoryList {
     });
 
     // build a new User instance from the API response
-    const newStory = new Story(response.data.story);
+    newStory = new Story(response.data.story);
     this.stories.unshift(newStory);
     this.ownStories.unshift(newStory)
-
-    // attach the token to the newUser instance for convenience
-    user.loginToken = response.data.token;
 
     return newStory;  
   }

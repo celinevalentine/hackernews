@@ -134,15 +134,57 @@ $(async function() {
    * A rendering function to call the StoryList.getStories static method,
    *  which will generate a storyListInstance. Then render it.
    */
-  //add a story to submit the form
-$('#show-add-story').on('click', function(e){
-  $('#submit-form').slideDown();
-});
+  //submit form to add a story
+  $submitForm.on('submit', async function(e){
+    e.preventDefault();
+    //grab all info from the form
+    const author = $('#author').val();
+    const title = $('#title').val();
+    const url = $('#url').val();
+    const username = currentUser.username;
+    const hostName = getHostName(url);
+
+    const storyObj = await storyList.addStory(currenctUser, {
+      author,
+      title,
+      url,
+      username,
+    });
+    //generate markups for new story;
+    const $li = $(`
+    <li id="${storyObj.storylist}" class="{storyObj.storylist}">
+  <span class="star">
+    <i class="far fa-star"></i>
+  </span>
+  <a class="article-link" href="${url}" target = "a_blank"><strong>${title}</strong></a>
+  <small class="article-hostname ${hostname}">(${hostname})</small>
+  <small class="article-author">by ${author}</small>
+  <small class="aritcle-username">${username}</small> 
+</li>
+  `);
+  $allStoriesList.prepend($li);
+  //hide form and reset it
+  $submitForm.slideUp('slow');
+  $submitForm.trigger('reset');
+
+  });
+$('#show-add-story').on('click', function(){
+  if (currentUser) {
+    hideElements();
+    $allStoriesList.show();
+    $submitForm.slideToggle();
+
+  }
+})
+
+
+
+
+
   async function generateStories() {
     // get an instance of StoryList
     const storyListInstance = await StoryList.getStories();
     // update our global variable
-    storyList = storyListInstance;
     // empty out that part of the page
     $allStoriesList.empty();
 
