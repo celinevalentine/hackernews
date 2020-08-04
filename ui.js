@@ -12,6 +12,7 @@ $(async function() {
   const $userProfile = $('#user-profile');
   const $navUserProfile = $('#nav-user-profile');
   const $navWelcome = $('#nav-welcome');
+  
 
   let storyList = null;
   let currentUser = null;
@@ -32,6 +33,15 @@ $(async function() {
     syncCurrentUserToLocalStorage();
     loginAndSubmitForm();
   });
+
+  //a function to generate profile for eachuser instance
+
+  function generateProfile(){
+    $navUserProfile.text(`${currentUser.username}`);
+    $('#profile-name').text(`Name: ${currentUser.name}`);
+    $('#profile-username').text(`Username:${currentUser.username}`);
+    $('#profile-account-date').text(`Account Created: ${currentUser.createdAt.slice(0,9)}`);
+  }
 
   /**
    * Event listener for signing up.
@@ -89,6 +99,7 @@ $(async function() {
     await generateStories();
 
     if (currentUser) {
+      generateProfile();
       showNavForLoggedInUser();
     }
   }
@@ -111,6 +122,7 @@ $(async function() {
 
     // update the navigation bar
     showNavForLoggedInUser();
+    generateProfile();
   }
 
    //an event handler for Navigation to Homepage
@@ -217,7 +229,7 @@ $('.articles-container').on('click', '.star', async function(e){
       $tgt.closest('i').toggleClass('fas far');
     } else {
       await currentUser.addFavorite(storyId);
-      $tgt.closest('i').toggle('fas far');
+      $tgt.closest('i').toggleClass('fas far');
     }
     }
 });
@@ -230,7 +242,7 @@ function generateFaves(){
   } else {
     for (let story of currentUser.favorites)
  {
-  let favoriteHTML = generateStoryHTML(story,false, true);
+  let favoriteHTML = generateStoryHTML(story,false);
   $favoritedStories.append(favoriteHTML);
  }};
 }
