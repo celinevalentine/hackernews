@@ -59,11 +59,25 @@ class StoryList {
     // build a new User instance from the API response
     newStory = new Story(response.data.story);
     this.stories.unshift(newStory);
-    this.ownStories.unshift(newStory)
+    user.ownStories.unshift(newStory)
 
     return newStory;  
   }
-}
+
+  async removeStory(user,storyId) {
+    await axios ({
+        url: `${BASE_URL}/stories/${storyId}`,
+        method: 'DELETE',
+        data: {
+          token: user.loginToken,
+      }
+    });
+    this.stories = this.stories.filter((story)=> story.storyId !== storyId);
+    user.ownStories = user.ownStories.filter((s)=> s.storyId !== storyId);
+    }
+  }
+
+
 
 
 /**
@@ -166,6 +180,55 @@ class User {
     existingUser.ownStories = response.data.user.stories.map(s => new Story(s));
     return existingUser;
   }
+
+  addFavorite(storyId) {
+    return this._toggleFavorite(storyId,'POST');
+  }
+
+  removeFavorite(storyId) {
+    return this._toggleFavorite(storyId,'DELETE');
+  }
+async _toggleFavorite(storyId, httpVerb) {
+  await axios ({
+    url: `${BASE_URL}/users/${this.username}/favorites/${storyId}`,
+    method: httpVerb,
+    data:{
+      token: this.loginToken,
+    }
+  });
+  await this.getUser();
+  return this;
+}
+
+async getUser(){
+  const res = await axios.get(`${BASE_URL}/users/${this.username}`,{
+    params: {
+      token: this.loginToken,
+    },
+  });
+  this.name = res.data.user.name;
+  this.createdAt = res.data.user.createdAt;
+  this.updatedAt = res.data.user.updatedAt;
+
+  this.favorites = res.data.user.favorites.map((s)=> new Story(s));
+  this.ownStories = res.data.user.stories.map((s)=> new Story(s));
+
+  return this;
+}
+async updateUser(userData) {
+  const res = await axios ({
+    url:  `${BASE_URL}/users/${this.username}`,
+    method:'PATCH',
+    data:{
+      user:userData,
+      token: this.loginToken,
+    }
+  });
+}
+
+
+
+
 }
 
 /**
