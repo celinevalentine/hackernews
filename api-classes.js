@@ -139,6 +139,10 @@ class User {
       }
     });
 
+    //throw and catch errors if server is down or there's no user
+    if(! response.data || !response.data.user)
+      throw new Error('No user structure is found!');
+      
     // build a new User instance from the API response
     const existingUser = new User(response.data.user);
 
