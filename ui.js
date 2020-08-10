@@ -182,7 +182,8 @@ function generateMyStories(){
     $ownStories.append('<h5>No stories added by user yet!</h5>');
   } else {
     for (let story of currentUser.ownStories){
-  let ownStoryHTML = generateStoryHTML(story, true);
+      isFavorite(currentUser, storyId)
+  let ownStoryHTML = generateStoryHTML(story, true, true);
   $ownStories.append(ownStoryHTML);
 }};
   $ownStories.show();
@@ -245,8 +246,8 @@ function generateFaves(){
   /**
    * A function to render HTML for an individual Story instance
    */
-  let story = {};
-  generateStoryHTML(story, true, true);
+  // let story = {};
+  // generateStoryHTML(story, true, true);
 
   function generateStoryHTML(story, isOwnStory, isFavorite) {
     let hostName = getHostName(story.url);
