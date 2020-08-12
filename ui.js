@@ -143,7 +143,7 @@ $(async function() {
 // </li>
 //   `);
   // $allStoriesList.prepend($li);
-  generateStoryHTML();
+  generateStoryHTML(await generateStories());
   $submitForm.slideUp('slow');
   $submitForm.trigger('reset');
   
@@ -182,8 +182,8 @@ function generateMyStories(){
     $ownStories.append('<h5>No stories added by user yet!</h5>');
   } else {
     for (let story of currentUser.ownStories){
-      isFavorite(currentUser, storyId)
-  let ownStoryHTML = generateStoryHTML(story, true, true);
+      isFavorite(story)
+  let ownStoryHTML = generateStoryHTML(story, true);
   $ownStories.append(ownStoryHTML);
 }};
   $ownStories.show();
@@ -201,7 +201,7 @@ function generateMyStories(){
 
 async function addStarToStory(e){
   if(currentUser) {
-    const $tgt = $(e.target);
+    const $tgt = e.target;
     const $closestLi = $tgt.closest('li');
     const storyId = $closestLi.attr('id');
 
@@ -249,9 +249,9 @@ function generateFaves(){
   // let story = {};
   // generateStoryHTML(story, true, true);
 
-  function generateStoryHTML(story, isOwnStory, isFavorite) {
+  function generateStoryHTML(story, isOwnStory) {
     let hostName = getHostName(story.url);
-    let startType = isFavorite ? 'fas': 'far';
+    let startType = isFavorite(story) ? 'fas': 'far';
 
     const trashCanIcon = isOwnStory ? `<span class = "trash-can">
     <i class="fas fa-trash-alt"></i>
