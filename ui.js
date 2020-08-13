@@ -191,8 +191,8 @@ function generateMyStories(){
 };
 
  async function deleteOwnStories(e){
-   const closestLi = e.target.closest('li');
-   const storyId = closestLi.attr('id');
+   const $closestLi = $(e.target).closest('li');
+   const storyId = $closestLi.attr('id');
    await storyList.removeStory(currentUser, storyId);
    await generateStories();
    hideElements();
@@ -215,6 +215,7 @@ async function addStarToStory(e){
     }
 };
 
+
 //a function to generate favorite stories to favorited story list
 function generateFaves(){
   $favoritedStories.empty();
@@ -227,6 +228,7 @@ function generateFaves(){
   $favoritedStories.append(favoriteHTML);
  }};
 };
+
 
 //a function to generate stories to story list
   async function generateStories() {
