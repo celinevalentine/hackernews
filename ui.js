@@ -208,6 +208,7 @@ async function addStarToStory(e){
     if($tgt.hasClass('fas')){
       await currentUser.removeFavorite(storyId);
       $tgt.closest('i').toggleClass('fas far');
+      deleteFavStories(storyId);
     } else {
       await currentUser.addFavorite(storyId);
       $tgt.closest('i').toggleClass('fas far');
@@ -215,6 +216,14 @@ async function addStarToStory(e){
     }
 };
 
+async function deleteFavStories(e){
+  const $closestLi = $(e.target).closest('li');
+  const storyId = $closestLi.attr('id');
+  await storyList.removeFavorite(currentUser, storyId);
+  generateFaves();
+  hideElements();
+  $allStoriesList.show();
+};
 
 //a function to generate favorite stories to favorited story list
 function generateFaves(){
