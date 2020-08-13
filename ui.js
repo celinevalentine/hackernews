@@ -199,30 +199,25 @@ function generateMyStories(){
    $allStoriesList.show();
  };
 
-async function addStarToStory(e){
-  if(currentUser) {
+ async function addStarToStory(e) {
+  if (currentUser) {
     const $tgt = $(e.target);
     const $closestLi = $tgt.closest('li');
     const storyId = $closestLi.attr('id');
 
-    if($tgt.hasClass('fas')){
+    if ($tgt.hasClass('fas')) {
       await currentUser.removeFavorite(storyId);
       $tgt.closest('i').toggleClass('fas far');
-      deleteFavStories(storyId);
+      console.log($closestLi.parent("#favorited-articles"));
+      console.log($closestLi.parent("#favorited-articles").length);
+      if ($closestLi.parent("#favorited-articles").length > 0) {
+        $($closestLi).remove();
+      }
     } else {
       await currentUser.addFavorite(storyId);
       $tgt.closest('i').toggleClass('fas far');
     }
-    }
-};
-
-async function deleteFavStories(e){
-  const $closestLi = $(e.target).closest('li');
-  const storyId = $closestLi.attr('id');
-  await storyList.removeFavorite(currentUser, storyId);
-  generateFaves();
-  hideElements();
-  $allStoriesList.show();
+  };
 };
 
 //a function to generate favorite stories to favorited story list
