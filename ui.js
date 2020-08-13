@@ -183,7 +183,7 @@ function generateMyStories(){
   } else {
     for (let story of currentUser.ownStories){
       isFavorite(story)
-  let ownStoryHTML = generateStoryHTML(story, true);
+  let ownStoryHTML = generateStoryHTML(story);
   $ownStories.append(ownStoryHTML);
 }};
   $ownStories.show();
@@ -191,8 +191,8 @@ function generateMyStories(){
 };
 
  async function deleteOwnStories(e){
-   const $closestLi = $(e.target).closest('li');
-   const storyId = $closestLi.attr('id');
+   const closestLi = e.target.closest('li');
+   const storyId = closestLi.attr('id');
    await storyList.removeStory(currentUser, storyId);
    await generateStories();
    hideElements();
@@ -201,7 +201,7 @@ function generateMyStories(){
 
 async function addStarToStory(e){
   if(currentUser) {
-    const $tgt = e.target;
+    const $tgt = $(e.target);
     const $closestLi = $tgt.closest('li');
     const storyId = $closestLi.attr('id');
 
@@ -219,11 +219,11 @@ async function addStarToStory(e){
 function generateFaves(){
   $favoritedStories.empty();
   if (currentUser.favorites.length === 0){
-    $ownStories.append('<h5>No favorites added yet!</h5>')
+    $favoritedStories.append('<h5>No favorites added yet!</h5>')
   } else {
     for (let story of currentUser.favorites)
  {
-  let favoriteHTML = generateStoryHTML(story,false);
+  let favoriteHTML = generateStoryHTML(story);
   $favoritedStories.append(favoriteHTML);
  }};
 };
@@ -249,11 +249,11 @@ function generateFaves(){
   // let story = {};
   // generateStoryHTML(story, true, true);
 
-  function generateStoryHTML(story, isOwnStory) {
+  function generateStoryHTML(story) {
     let hostName = getHostName(story.url);
     let startType = isFavorite(story) ? 'fas': 'far';
 
-    const trashCanIcon = isOwnStory ? `<span class = "trash-can">
+    const trashCanIcon = isOwnStory(story) ? `<span class = "trash-can">
     <i class="fas fa-trash-alt"></i>
     </span>`:
     '';
@@ -282,6 +282,14 @@ function generateFaves(){
       favStoryIds = new Set(currentUser.favorites.map((obj) => obj.storyId));
     }
     return favStoryIds.has(story.storyId);
+  }
+
+  function isOwnStory(story){
+    let ownStoryIds = new Set();
+    if (currentUser) {
+      ownStoryIds = new Set(currentUser.ownStories.map((obj) => obj.storyId));
+    }
+    return ownStoryIds.has(story.storyId);
   }
 
   /* a function to hide all elements in elementsArr */
