@@ -27,7 +27,7 @@ Within my UI code, I created helper functions wherever I found myself writing re
 I spent a considerable amount of time during this project understanding the API and existing codebase (expected inputs/outputs of functions, etc). I realized that this exercise was as much about learning to read someone else's code as it was building my own functionality for an application.
 
 This was also an exercise in patience: there were large chunks of time where I'd be jamming along, then everything would break and I'd have to retrace my steps to figure out where I went wrong. It was easy to get frustrated during these moments, but I learned to take breaks/deep breaths, and persist until I finally found the bug.
-```
+
 
 ### Stretch Goal:
 
