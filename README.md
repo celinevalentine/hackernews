@@ -13,25 +13,13 @@ https://celinevalentine.github.io/hackernews/
 
 
 <!-- GETTING STARTED -->
-## What I did:
+## What I Learned:
 
-I was provided a codebase to start with objects for StoryList, User, and Story already partially defined (attributes, some methods). I spent a large portion of my time on this project understanding the already written code, and the API Springboard provided for this project.
-
-I was then tasked with building functionality for: creating an account, logging in, creating a post, favoriting/unfavoriting posts, viewing favorite posts, viewing and deleting my posts, and viewing and updating account information. All of these were done with the tools I've implemented over the course of my curriculum to date, making use of AJAX to make calls to API's with user input, handling the response and using it to update the UI accordingly.
-
-I believe this was the first project in which I had separate files for user interface and logic for API interaction, highlighting the importance of separation of concerns.
-
-Within my UI code, I created helper functions wherever I found myself writing repetative code, so keep my code digestible for the instructor who would ultimately be responsible for my code review.
-
-### What I learned:
-
-I spent a considerable amount of time during this project understanding the API and existing codebase (expected inputs/outputs of functions, etc). I realized that this exercise was as much about learning to read someone else's code as it was building my own functionality for an application.
-
-This was also an exercise in patience: there were large chunks of time where I'd be jamming along, then everything would break and I'd have to retrace my steps to figure out where I went wrong. It was easy to get frustrated during these moments, but I learned to take breaks/deep breaths, and persist until I finally found the bug.
+The goal for this project is to use Hack or Snooze API to clone this app. Functionalies including creating an account, logging in, creating a post, favoriting/unfavoriting posts, viewing favorite posts, viewing and deleting my posts, and viewing and updating account information. With knowledge in object oriented programming in javascript, I was able to implement all these functions with separate concerns in mind. Functions that are for the users to view are in ui.js vs ones for behind the scene in app.js file. 
 
 
 ### Stretch Goal:
 
-I'd love to refactor my code to more specifically handle errors that arise when user tries to create an account with a username that's already been taken. I'd also like to use the API response to make error messages displayed to the user more specific (for both account creation and login).
+I'd like to further refactor my code to specifically handle errors that arise when user tries to create an account with a username that's already been taken. I'd also like to use the API response to make error messages displayed to the user more specific (for both account creation and login).
 
 
